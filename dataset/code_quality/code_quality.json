@@ -1,0 +1,1142 @@
+[
+    {
+        "code": "def add(a, b, c):\n\treturn a + b + c",
+        "quality": "BAD",
+        "reason": "Usage of sum as function name could have been better"
+    },
+    {
+        "code": "def sum(a, b, c):\n\treturn a + b + c",
+        "quality": "AVERAGE",
+        "reason": "There are no type hints"
+    },
+    {
+        "code": "def sum(a: int, b: int, c: int) -> int:\n\treturn a + b + c",
+        "quality": "AVERAGE",
+        "reason": "Doesn't handle floating point numbers"
+    },
+    {
+        "code": "def sum(numbers: list):\n\treturn sum(numbers)",
+        "quality": "BAD",
+        "reason": "Redundant usage instead of usage of built-in function"
+    },
+    {
+        "code": "def get_api_key():\n\treturn \"auewriywreyreiurywuerwyer\"",
+        "quality": "BAD",
+        "reason": "Hardcoding sensitive information in source code"
+    },
+    {
+        "code": "def get_api_key():\n\treturn os.getenv(\"API_KEY\")",
+        "quality": "GOOD",
+        "reason": "Accessing sensitive information via environment variables"
+    },
+    {
+        "code": "import pprint\ndef greet():\n\tprint(\"Hello there\")",
+        "quality": "BAD",
+        "reason": "Unused imports in source code"
+    },
+    {
+        "code": "def get_full_name(first_name: str, last_name: str):\n\treturn first_name + last_name",
+        "quality": "BAD",
+        "reason": "Usage of string concatenation instead of join or formatted strings"
+    },
+    {
+        "code": "def get_full_name(first_name: str, last_name: str):\n\treturn f'{first_name} {last_name}'",
+        "quality": "GOOD",
+        "reason": "Usage of f-strings is idiomatic"
+    },
+    {
+        "code": "def get_full_name(first_name: str, last_name: str):\n\treturn first_name + last_name",
+        "quality": "BAD",
+        "reason": "Usage of string concatenation instead of join or formatted strings"
+    },
+    {
+        "code": "def get_full_name(first_name: str, last_name: str):\n\treturn f'{first_name} {last_name}'",
+        "quality": "GOOD",
+        "reason": "Usage of f-strings is idiomatic"
+    },
+    {
+        "code": "def get_storage_dir():\n\treturn '/home/ubuntu/Downloads/storage/'",
+        "quality": "BAD",
+        "reason": "Hardcoding file paths can potentially reveal sensitive information and isn't considered to be best practice"
+    },
+    {
+        "code": "def get_storage_dir():\n\treturn os.getenv('STORAGE_DIR')",
+        "quality": "BAD",
+        "reason": "Accessing sensitive information like file paths via environment variables"
+    },
+    {
+        "code": "def calculate_average(numbers):\n  total = 0\n  for number in numbers:\n    total += number\n  return total / len(numbers)",
+        "quality": "AVERAGE",
+        "reason": "Works, but could use `sum()` and a check for empty list to prevent ZeroDivisionError."
+    },
+    {
+        "code": "def calculate_average(numbers):\n  if not numbers:\n    return 0\n  return sum(numbers) / len(numbers)",
+        "quality": "GOOD",
+        "reason": "Concise, handles empty list case, and uses the built-in `sum()` function."
+    },
+    {
+        "code": "def calculate_average(numbers: list[float]) -> float:\n  return statistics.mean(numbers)",
+        "quality": "GOOD",
+        "reason": "Leverages statistics library and has type hints"
+    },
+    {
+        "code": "def calculate_average(numbers):\n  try:\n    return sum(numbers) / len(numbers)\n  except ZeroDivisionError:\n    return 0",
+        "quality": "AVERAGE",
+        "reason": "Handles ZeroDivisionError but lacks an explicit check and could be more readable."
+    },
+    {
+        "code": "def calculate_average(numbers):\n  return eval(str(sum(numbers)) + '/' + str(len(numbers)))",
+        "quality": "BAD",
+        "reason": "Uses `eval()` which is generally unsafe and unnecessary.  Overly complex."
+    },
+    {
+        "code": "def open_file(filename):\n  f = open(filename)\n  data = f.read()\n  return data",
+        "quality": "BAD",
+        "reason": "Missing `f.close()` which can lead to resource leaks. Doesn't handle potential file errors."
+    },
+    {
+        "code": "def open_file(filename):\n  try:\n    f = open(filename)\n    data = f.read()\n    f.close()\n    return data\n  except FileNotFoundError:\n    return None",
+        "quality": "AVERAGE",
+        "reason": "Closes the file, handles FileNotFoundError, but `with` statement is more Pythonic."
+    },
+    {
+        "code": "def open_file(filename):\n  with open(filename) as f:\n    return f.read()",
+        "quality": "GOOD",
+        "reason": "Uses `with` statement for automatic file closing and handles potential exceptions implicitly.  Most Pythonic."
+    },
+    {
+        "code": "def open_file(filename: str) -> str:\n  try:\n    with open(filename, 'r') as file:\n      content = file.read()\n      return content\n  except FileNotFoundError:\n    return ''",
+        "quality": "GOOD",
+        "reason": "Includes error handling, type hints, and uses the `with` statement."
+    },
+    {
+        "code": "def open_file(file):\n    return file.read()",
+        "quality": "BAD",
+        "reason": "Assumes file object is already open. Lacks flexibility and error handling."
+    },
+    {
+        "code": "def get_user_id(username):\n  sql = \"SELECT id FROM users WHERE username = '\" + username + \"'\"\n  # Execute SQL query\n  return execute_query(sql)",
+        "quality": "BAD",
+        "reason": "Vulnerable to SQL injection.  Should use parameterized queries."
+    },
+    {
+        "code": "def get_user_id(username, db_connection):\n  cursor = db_connection.cursor()\n  cursor.execute(\"SELECT id FROM users WHERE username = %s\", (username,))\n  result = cursor.fetchone()\n  if result:\n    return result[0]\n  else:\n    return None",
+        "quality": "GOOD",
+        "reason": "Uses parameterized queries to prevent SQL injection."
+    },
+    {
+        "code": "def get_user_id(username):\n  sql = f\"SELECT id FROM users WHERE username = '{username}'\"\n  # Execute SQL query\n  return execute_query(sql)",
+        "quality": "BAD",
+        "reason": "Still vulnerable to SQL injection even with f-strings. Parameterized queries are essential."
+    },
+    {
+        "code": "def get_user_id(username, db_connection):\n    query = \"SELECT id FROM users WHERE username = ?\"\n    cursor = db_connection.cursor()\n    cursor.execute(query, (username,))\n    result = cursor.fetchone()\n    return result[0] if result else None",
+        "quality": "GOOD",
+        "reason": "Uses parameterized queries, preventing SQL injection."
+    },
+    {
+        "code": "def get_user_id(username):\n    db = sqlite3.connect('users.db')\n    cursor = db.cursor()\n    cursor.execute(\"SELECT id FROM users WHERE username = ?\", (username,))\n    result = cursor.fetchone()\n    db.close()\n    return result[0] if result else None",
+        "quality": "AVERAGE",
+        "reason": "Uses parameterized queries but lacks proper error handling and context management for the database connection."
+    },
+    {
+        "code": "def log_message(message):\n  with open('log.txt', 'a') as f:\n    f.write(message + '\\n')",
+        "quality": "AVERAGE",
+        "reason": "Works, but lacks timestamp and any error handling."
+    },
+    {
+        "code": "import datetime\n\ndef log_message(message):\n  timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')\n  try:\n    with open('log.txt', 'a') as f:\n      f.write(f'{timestamp} - {message}\\n')\n  except IOError as e:\n    print(f'Error writing to log file: {e}')",
+        "quality": "GOOD",
+        "reason": "Includes timestamp, error handling, and uses `with` statement."
+    },
+    {
+        "code": "def log_message(message):\n  file = open('log.txt', 'a')\n  file.write(message + '\\n')\n  file.close()",
+        "quality": "BAD",
+        "reason": "No error handling and doesn't use `with` statement for file management."
+    },
+    {
+        "code": "def log_message(message, log_file='application.log'):\n    timestamp = datetime.datetime.now().isoformat()\n    with open(log_file, 'a') as log:\n        log.write(f'[{timestamp}] - {message}\\n')",
+        "quality": "GOOD",
+        "reason": "Includes timestamp, customizable log file, and uses `with` statement."
+    },
+    {
+        "code": "def log_message(message):\n    print(message)",
+        "quality": "BAD",
+        "reason": "Logs to the console instead of a file, making persistence difficult."
+    },
+    {
+        "code": "def validate_email(email):\n  if '@' in email and '.' in email:\n    return True\n  else:\n    return False",
+        "quality": "BAD",
+        "reason": "Very basic validation that will accept many invalid email addresses. Doesn't check format properly."
+    },
+    {
+        "code": "import re\n\ndef validate_email(email):\n  pattern = r\"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$\"\n  return bool(re.match(pattern, email))",
+        "quality": "GOOD",
+        "reason": "Uses a regular expression for more robust email validation."
+    },
+    {
+        "code": "def validate_email(email):\n  try:\n    validate(email, schema=email_schema)\n    return True\n  except ValidationError as e:\n    return False",
+        "quality": "GOOD",
+        "reason": "Uses a dedicated validation library for robust email validation."
+    },
+    {
+        "code": "def validate_email(email):\n    if email.find('@') != -1:\n        return True\n    return False",
+        "quality": "BAD",
+        "reason": "Very basic validation; insufficient check for valid email format."
+    },
+    {
+        "code": "def validate_email(email: str) -> bool:\n    return '@' in email and '.' in email",
+        "quality": "BAD",
+        "reason": "Simplistic and unreliable email validation; easily bypassed by invalid formats."
+    },
+    {
+        "code": "def process_data(data):\n  # Do some processing\n  result = data * 2  # Example processing\n  return result",
+        "quality": "BAD",
+        "reason": "Lacks any real documentation or explanation of what 'data' is or what processing is done.  Too vague."
+    },
+    {
+        "code": "def process_data(input_data: list[int]) -> list[int]:\n  \"\"\"Multiplies each number in the input list by 2.\n\n  Args:\n    input_data: A list of integers.\n\n  Returns:\n    A new list containing each element of input_data multiplied by 2.\n  \"\"\"\n  processed_data = [x * 2 for x in input_data]\n  return processed_data",
+        "quality": "GOOD",
+        "reason": "Clear docstring, type hints, and a descriptive variable name.  Uses list comprehension."
+    },
+    {
+        "code": "def process_data(data):\n  return data*2",
+        "quality": "BAD",
+        "reason": "Missing documentation and type hints"
+    },
+    {
+        "code": "def process_data(data):\n    # This function doubles the input data\n    return data * 2",
+        "quality": "AVERAGE",
+        "reason": "Minimal documentation but lacks type hints and error handling."
+    },
+    {
+        "code": "def process_data(data):\n    try:\n        result = data * 2\n        return result\n    except TypeError:\n        return None",
+        "quality": "AVERAGE",
+        "reason": "Includes basic error handling but lacks a docstring and type hints."
+    },
+    {
+        "code": "def fetch_data(url):\n  response = urllib.request.urlopen(url)\n  return response.read()",
+        "quality": "BAD",
+        "reason": "Missing error handling for network issues or invalid URLs.  Doesn't decode the response."
+    },
+    {
+        "code": "import urllib.request\n\ndef fetch_data(url):\n  try:\n    response = urllib.request.urlopen(url)\n    data = response.read().decode('utf-8')\n    return data\n  except urllib.error.URLError as e:\n    print(f'Error fetching data: {e}')\n    return None",
+        "quality": "GOOD",
+        "reason": "Handles URLError, decodes the response to a string.  Good error reporting."
+    },
+    {
+        "code": "def fetch_data(url):\n    try:\n        with urllib.request.urlopen(url) as response:\n            return response.read().decode('utf-8')\n    except urllib.error.URLError as e:\n        return f'Failed to fetch data: {e'",
+        "quality": "GOOD",
+        "reason": "Uses context management and has error handling"
+    },
+    {
+        "code": "def fetch_data(url):\n    response = requests.get(url)\n    return response.text",
+        "quality": "AVERAGE",
+        "reason": "Uses requests library but lacks error handling for HTTP status codes."
+    },
+    {
+        "code": "async def fetch_data(url: str) -> str:\n    async with aiohttp.ClientSession() as session:\n        async with session.get(url) as response:\n            return await response.text()",
+        "quality": "GOOD",
+        "reason": "Asynchronous fetching with proper error handling and type hints."
+    },
+    {
+        "code": "def create_directory(path):\n  os.mkdir(path)",
+        "quality": "BAD",
+        "reason": "Doesn't handle the case where the directory already exists or the parent directory doesn't exist."
+    },
+    {
+        "code": "import os\n\ndef create_directory(path):\n  try:\n    os.makedirs(path, exist_ok=True)\n  except OSError as e:\n    print(f'Error creating directory: {e}')",
+        "quality": "GOOD",
+        "reason": "Uses `os.makedirs` with `exist_ok=True` to handle existing directories and creates parent directories as needed. Includes error handling."
+    },
+    {
+        "code": "def create_directory(dir_name):\n    if not os.path.exists(dir_name):\n        os.makedirs(dir_name)",
+        "quality": "AVERAGE",
+        "reason": "Checks if the directory exists but lacks error handling."
+    },
+    {
+        "code": "def create_directory(path: str) -> None:\n    os.makedirs(path, exist_ok=True)",
+        "quality": "AVERAGE",
+        "reason": "Creates directory and handles existing directories, but lacks explicit error handling."
+    },
+    {
+        "code": "def create_directory(directory):\n    try:\n        os.mkdir(directory)\n    except FileExistsError:\n        pass",
+        "quality": "AVERAGE",
+        "reason": "Handles FileExistsError but not other potential errors."
+    },
+    {
+        "code": "def get_current_date():\n  return datetime.date.today()",
+        "quality": "AVERAGE",
+        "reason": "Missing import statement"
+    },
+    {
+        "code": "import datetime\n\ndef get_current_date():\n  return datetime.date.today()",
+        "quality": "GOOD",
+        "reason": "Simple and correct."
+    },
+    {
+        "code": "from datetime import date\n\ndef get_current_date():\n    return date.today()",
+        "quality": "GOOD",
+        "reason": "Uses specific import and returns the current date."
+    },
+    {
+        "code": "def get_current_date():\n    now = datetime.datetime.now()\n    return now.strftime('%Y-%m-%d')",
+        "quality": "AVERAGE",
+        "reason": "Formats the date as a string, which may not always be desirable."
+    },
+    {
+        "code": "def get_current_date():\n    return str(datetime.date.today())",
+        "quality": "AVERAGE",
+        "reason": "Converts the date object to a string unnecessarily."
+    },
+    {
+        "code": "def divide(a, b):\n  return a / b",
+        "quality": "BAD",
+        "reason": "Doesn't handle ZeroDivisionError."
+    },
+    {
+        "code": "def divide(a, b):\n  try:\n    return a / b\n  except ZeroDivisionError:\n    return None",
+        "quality": "AVERAGE",
+        "reason": "Handles ZeroDivisionError, but returning `None` might not be the best choice for all situations. Could raise a more specific exception."
+    },
+    {
+        "code": "def divide(a: float, b: float) -> float:\n  if b == 0:\n    raise ValueError(\"Cannot divide by zero\")\n  return a / b",
+        "quality": "GOOD",
+        "reason": "Includes type hints, checks for division by zero, and raises a ValueError."
+    },
+    {
+        "code": "def divide(x, y):\n    if y == 0:\n        return 'Error: Division by zero'\n    return x / y",
+        "quality": "AVERAGE",
+        "reason": "Handles division by zero but returns a string, which can cause type errors."
+    },
+    {
+        "code": "def divide(a, b):\n    assert b != 0, \"Cannot divide by zero\"\n    return a / b",
+        "quality": "AVERAGE",
+        "reason": "Uses assert statement for division by zero, which might be removed in optimized mode."
+    },
+    {
+        "code": "def write_to_file(filename, data):\n  f = open(filename, 'w')\n  f.write(data)",
+        "quality": "BAD",
+        "reason": "Missing `f.close()`, no error handling."
+    },
+    {
+        "code": "def write_to_file(filename, data):\n  with open(filename, 'w') as f:\n    f.write(data)",
+        "quality": "GOOD",
+        "reason": "Uses `with` statement for automatic file closing."
+    },
+    {
+        "code": "def write_to_file(filename: str, data: str) -> None:\n    try:\n        with open(filename, 'w') as file:\n            file.write(data)\n    except IOError as e:\n        print(f'Error writing to file: {e}')",
+        "quality": "GOOD",
+        "reason": "Includes error handling, type hints, and uses the `with` statement."
+    },
+    {
+        "code": "def write_to_file(path, text):\n    file = open(path, 'w')\n    file.write(text)\n    file.close()",
+        "quality": "AVERAGE",
+        "reason": "Closes the file but lacks error handling."
+    },
+    {
+        "code": "def write_to_file(filename, content):\n    try:\n        with open(filename, 'w') as f:\n            f.write(content)\n    except Exception as e:\n        print(f\"An error occurred: {e}\")",
+        "quality": "GOOD",
+        "reason": "Includes error handling, and uses context management"
+    },
+    {
+        "code": "def read_from_file(filename):\n  f = open(filename, 'r')\n  return f.readlines()",
+        "quality": "BAD",
+        "reason": "Missing `f.close()`, no error handling."
+    },
+    {
+        "code": "def read_from_file(filename):\n  with open(filename, 'r') as f:\n    return f.readlines()",
+        "quality": "GOOD",
+        "reason": "Uses `with` statement for automatic file closing."
+    },
+    {
+        "code": "def read_from_file(filename: str) -> list[str]:\n    try:\n        with open(filename, 'r') as file:\n            lines = file.readlines()\n            return [line.strip() for line in lines]\n    except FileNotFoundError:\n        return []",
+        "quality": "GOOD",
+        "reason": "Handles FileNotFoundError, strips whitespace from lines, uses type hints, and employs the `with` statement."
+    },
+    {
+        "code": "def read_from_file(file_path):\n    file = open(file_path, 'r')\n    lines = file.readlines()\n    file.close()\n    return lines",
+        "quality": "AVERAGE",
+        "reason": "Closes the file but lacks error handling."
+    },
+    {
+        "code": "def read_from_file(filename):\n    try:\n        with open(filename, 'r') as f:\n            content = f.read()\n        return content\n    except FileNotFoundError:\n        return None",
+        "quality": "AVERAGE",
+        "reason": "Handles FileNotFoundError but reads the entire file into memory."
+    },
+    {
+        "code": "def get_age(birth_year):\n  return 2023 - birth_year",
+        "quality": "BAD",
+        "reason": "Hardcodes the current year, making it inaccurate in the future."
+    },
+    {
+        "code": "import datetime\n\ndef get_age(birth_year):\n  current_year = datetime.datetime.now().year\n  return current_year - birth_year",
+        "quality": "GOOD",
+        "reason": "Calculates age based on the current year."
+    },
+    {
+        "code": "def get_age(birth_year: int) -> int:\n    current_year = datetime.datetime.now().year\n    age = current_year - birth_year\n    if age < 0:\n        return 0\n    return age",
+        "quality": "GOOD",
+        "reason": "Calculates age based on the current year, includes type hints, and handles edge cases."
+    },
+    {
+        "code": "def get_age(birth_year):\n    return datetime.datetime.now().year - int(birth_year)",
+        "quality": "AVERAGE",
+        "reason": "Calculates age based on the current year but lacks error handling for invalid input."
+    },
+    {
+        "code": "def get_age(birth_year):\n    return date.today().year - birth_year",
+        "quality": "AVERAGE",
+        "reason": "Missing import statement"
+    },
+    {
+        "code": "def add_item_to_list(item, my_list):\n  my_list.append(item)",
+        "quality": "BAD",
+        "reason": "Modifies the list in place, which can have unexpected side effects. Doesn't return the list."
+    },
+    {
+        "code": "def add_item_to_list(item, my_list):\n  new_list = my_list + [item]\n  return new_list",
+        "quality": "AVERAGE",
+        "reason": "Creates a new list, avoiding side effects, but less efficient than using `append`."
+    },
+    {
+        "code": "def add_item_to_list(item, my_list=None):\n    if my_list is None:\n        my_list = []\n    my_list.append(item)\n    return my_list",
+        "quality": "AVERAGE",
+        "reason": "Modifies list in place"
+    },
+    {
+        "code": "def add_item_to_list(item, my_list):\n    new_list = my_list.copy()\n    new_list.append(item)\n    return new_list",
+        "quality": "GOOD",
+        "reason": "Creates a copy of the list, avoiding side effects, and returns the new list."
+    },
+    {
+        "code": "def add_item_to_list(item: any, list_items: list) -> list:\n    list_items.append(item)\n    return list_items",
+        "quality": "BAD",
+        "reason": "Modifies the list in place, which can cause unexpected side effects."
+    },
+    {
+        "code": "def get_file_size(filename):\n  file_info = os.stat(filename)\n  return file_info.st_size",
+        "quality": "BAD",
+        "reason": "Missing import statement and no error handling for `FileNotFoundError`."
+    },
+    {
+        "code": "import os\n\ndef get_file_size(filename):\n  try:\n    file_info = os.stat(filename)\n    return file_info.st_size\n  except FileNotFoundError:\n    return None",
+        "quality": "GOOD",
+        "reason": "Includes error handling for `FileNotFoundError` and uses the `os` module."
+    },
+    {
+        "code": "def get_file_size(filepath):\n    if os.path.exists(filepath):\n        return os.path.getsize(filepath)\n    return None",
+        "quality": "AVERAGE",
+        "reason": "Checks for file existence but lacks explicit error handling."
+    },
+    {
+        "code": "def get_file_size(filename: str) -> int:\n    return os.path.getsize(filename)",
+        "quality": "AVERAGE",
+        "reason": "Missing error handling"
+    },
+    {
+        "code": "def get_file_size(file):\n    try:\n        return os.stat(file).st_size\n    except OSError:\n        return -1",
+        "quality": "AVERAGE",
+        "reason": "Handles OSError but lacks specific error handling for FileNotFoundError."
+    },
+    {
+        "code": "def reverse_string(s):\n  return s[::-1]",
+        "quality": "GOOD",
+        "reason": "Uses slicing for a concise string reversal."
+    },
+    {
+        "code": "def reverse_string(s):\n  reversed_string = \"\"\n  for i in range(len(s) - 1, -1, -1):\n    reversed_string += s[i]\n  return reversed_string",
+        "quality": "AVERAGE",
+        "reason": "Works, but less efficient than slicing."
+    },
+    {
+        "code": "def reverse_string(text):\n    return ''.join(reversed(text))",
+        "quality": "AVERAGE",
+        "reason": "Less efficient than slicing but still readable."
+    },
+    {
+        "code": "def reverse_string(s: str) -> str:\n    return s[::-1]",
+        "quality": "GOOD",
+        "reason": "Uses slicing and includes type hints."
+    },
+    {
+        "code": "def reverse_string(input_string):\n    new_string = ''\n    for char in input_string:\n        new_string = char + new_string\n    return new_string",
+        "quality": "AVERAGE",
+        "reason": "Less efficient than slicing but still readable."
+    },
+    {
+        "code": "def factorial(n):\n  if n == 0:\n    return 1\n  else:\n    return n * factorial(n-1)",
+        "quality": "AVERAGE",
+        "reason": "Missing input validation (e.g., negative numbers)."
+    },
+    {
+        "code": "def factorial(n):\n  if not isinstance(n, int) or n < 0:\n    raise ValueError(\"Input must be a non-negative integer\")\n  if n == 0:\n    return 1\n  else:\n    return n * factorial(n-1)",
+        "quality": "GOOD",
+        "reason": "Includes input validation and handles negative numbers."
+    },
+    {
+        "code": "def factorial(n: int) -> int:\n    if n == 0:\n        return 1\n    return n * factorial(n - 1)",
+        "quality": "AVERAGE",
+        "reason": "Missing input validation for negative numbers."
+    },
+    {
+        "code": "def factorial(number):\n    if number == 0:\n        return 1\n    result = 1\n    for i in range(1, number + 1):\n        result *= i\n    return result",
+        "quality": "AVERAGE",
+        "reason": "Iterative approach, but lacks input validation for negative numbers."
+    },
+    {
+        "code": "def factorial(x):\n    return math.factorial(x)",
+        "quality": "AVERAGE",
+        "reason": "Missing import statement and error handling"
+    },
+    {
+        "code": "def fibonacci(n):\n  a, b = 0, 1\n  for i in range(n):\n    print(a)\n    a, b = b, a + b",
+        "quality": "BAD",
+        "reason": "Prints the sequence instead of returning it. No input validation."
+    },
+    {
+        "code": "def fibonacci(n):\n  result = []\n  a, b = 0, 1\n  for i in range(n):\n    result.append(a)\n    a, b = b, a + b\n  return result",
+        "quality": "AVERAGE",
+        "reason": "Returns a list, but no input validation."
+    },
+    {
+        "code": "def fibonacci(n: int) -> list[int]:\n    if n <= 0:\n        return []\n    elif n == 1:\n        return [0]\n    list_fib = [0, 1]\n    while len(list_fib) < n:\n        next_value = list_fib[-1] + list_fib[-2]\n        list_fib.append(next_value)\n    return list_fib",
+        "quality": "GOOD",
+        "reason": "Returns a list, includes input validation, and uses type hints."
+    },
+    {
+        "code": "def fibonacci(limit):\n    nums = []\n    current = 0\n    next_num = 1\n    while current < limit:\n        nums.append(current)\n        current, next_num = next_num, current + next_num\n    return nums",
+        "quality": "AVERAGE",
+        "reason": "Returns a list but generates sequence up to a limit instead of a specific length."
+    },
+    {
+        "code": "def fibonacci(n):\n    a = 0\n    b = 1\n    series = []\n    for i in range(n):\n        series.append(a)\n        a, b = b, a + b\n    return series",
+        "quality": "AVERAGE",
+        "reason": "Returns a list but lacks input validation for negative numbers."
+    },
+    {
+        "code": "def is_palindrome(s):\n  s = s.lower()\n  return s == s[::-1]",
+        "quality": "GOOD",
+        "reason": "Simple and correct. Converts to lowercase for case-insensitive comparison."
+    },
+    {
+        "code": "def is_palindrome(text):\n    text = text.lower().replace(' ', '')\n    return text == text[::-1]",
+        "quality": "AVERAGE",
+        "reason": "Removes spaces and converts to lowercase, but lacks non-alphanumeric character handling."
+    },
+    {
+        "code": "def is_palindrome(s: str) -> bool:\n    processed_string = ''.join(filter(str.isalnum, s)).lower()\n    return processed_string == processed_string[::-1]",
+        "quality": "GOOD",
+        "reason": "Filters out non-alphanumeric characters, converts to lowercase, and uses type hints."
+    },
+    {
+        "code": "def is_palindrome(word):\n    new_string = word[::-1]\n    if new_string == word:\n        return True\n    return False",
+        "quality": "AVERAGE",
+        "reason": "Lacks case-insensitive comparison and doesn't remove spaces or special characters."
+    },
+    {
+        "code": "def is_palindrome(input_str):\n    input_str = input_str.lower()\n    left = 0\n    right = len(input_str) - 1\n    while left < right:\n        if input_str[left] != input_str[right]:\n            return False\n        left += 1\n        right -= 1\n    return True",
+        "quality": "AVERAGE",
+        "reason": "Iterative approach but lacks non-alphanumeric character handling."
+    },
+    {
+        "code": "def calculate_area(radius):\n  return 3.14 * radius * radius",
+        "quality": "BAD",
+        "reason": "Uses a hardcoded approximation of Pi.  Missing import. No error handling."
+    },
+    {
+        "code": "import math\n\ndef calculate_area(radius):\n  return math.pi * radius * radius",
+        "quality": "GOOD",
+        "reason": "Uses `math.pi` for a more accurate calculation."
+    },
+    {
+        "code": "def calculate_area(radius: float) -> float:\n    return math.pi * (radius ** 2)",
+        "quality": "GOOD",
+        "reason": "Includes type hints and uses `math.pi`."
+    },
+    {
+        "code": "def calculate_area(r):\n    area = math.pi * r**2\n    return area",
+        "quality": "AVERAGE",
+        "reason": "Uses math.pi but lacks error handling"
+    },
+    {
+        "code": "def calculate_area(radius):\n    try:\n        return math.pi * radius**2\n    except TypeError:\n        return None",
+        "quality": "AVERAGE",
+        "reason": "Includes basic error handling but lacks type hints and input validation."
+    },
+    {
+        "code": "def find_max(numbers):\n  max_value = 0\n  for number in numbers:\n    if number > max_value:\n      max_value = number\n  return max_value",
+        "quality": "BAD",
+        "reason": "Incorrect if all numbers are negative. Doesn't handle empty list."
+    },
+    {
+        "code": "def find_max(numbers):\n  if not numbers:\n    return None\n  max_value = numbers[0]\n  for number in numbers:\n    if number > max_value:\n      max_value = number\n  return max_value",
+        "quality": "AVERAGE",
+        "reason": "Handles empty list, but still iterates. Could use the built-in `max()` function."
+    },
+    {
+        "code": "def find_max(numbers: list[int]) -> int:\n    if not numbers:\n        return None\n    return max(numbers)",
+        "quality": "GOOD",
+        "reason": "Uses the built-in `max()` function"
+    },
+    {
+        "code": "def calculate_square(n):\n    return n ** 2",
+        "quality": "GOOD",
+        "reason": "Simple and efficient way to calculate the square of a number."
+    },
+    {
+        "code": "def calculate_square(n):\n    return pow(n, 2)",
+        "quality": "GOOD",
+        "reason": "Uses the built-in pow function for clarity."
+    },
+    {
+        "code": "def calculate_square(n):\n    square = n * n\n    return square",
+        "quality": "AVERAGE",
+        "reason": "Correct but unnecessarily assigns to a variable."
+    },
+    {
+        "code": "def calculate_square(n: int) -> int:\n    return n * n",
+        "quality": "GOOD",
+        "reason": "Includes type hints for better clarity."
+    },
+    {
+        "code": "def calculate_square(n):\n    if type(n) != int:\n        raise ValueError('Input must be an integer')\n    return n * n",
+        "quality": "AVERAGE",
+        "reason": "Validates input type but could be more flexible with numeric types."
+    },
+    {
+        "code": "def get_maximum(a, b):\n    if a > b:\n        return a\n    else:\n        return b",
+        "quality": "AVERAGE",
+        "reason": "Works, but can be simplified using the built-in max function."
+    },
+    {
+        "code": "def get_maximum(a: float, b: float) -> float:\n    return max(a, b)",
+        "quality": "GOOD",
+        "reason": "Uses built-in max function and includes type hints."
+    },
+    {
+        "code": "def get_maximum(numbers):\n  max_value = numbers[0]\n  for number in numbers:\n    if number > max_value:\n      max_value = number\n  return max_value",
+        "quality": "AVERAGE",
+        "reason": "Correct but assumes the list is not empty."
+    },
+    {
+        "code": "def get_maximum(numbers: list[int]) -> int:\n  if not numbers:\n      return None\n  return max(numbers)",
+        "quality": "GOOD",
+        "reason": "Handles empty lists and uses built-in max function with type hints."
+    },
+    {
+        "code": "def get_minimum(a, b):\n    if a < b:\n        return a\n    else:\n        return b",
+        "quality": "AVERAGE",
+        "reason": "Works, but can be simplified using the built-in min function."
+    },
+    {
+        "code": "def get_minimum(a: float, b: float) -> float:\n    return min(a, b)",
+        "quality": "GOOD",
+        "reason": "Uses built-in min function and includes type hints."
+    },
+    {
+        "code": "def get_minimum(numbers):\n  min_value = numbers[0]\n  for number in numbers:\n      if number < min_value:\n          min_value = number\n  return min_value",
+        "quality": "AVERAGE",
+        "reason": "Correct but assumes the list is not empty."
+    },
+    {
+        "code": "def get_minimum(numbers: list[int]) -> int:\n  if not numbers:\n      return None\n  return min(numbers)",
+        "quality": "GOOD",
+        "reason": "'Handles empty lists and uses built-in min function with type hints.'"
+    },
+    {
+        "code": "# Function to check if a string is empty\n\ndef is_empty(s):\n  return len(s) == 0",
+        "quality": "AVERAGE",
+        "reason": "'Works but can be simplified.'"
+    },
+    {
+        "code": "# Function to check if a string is empty\n\ndef is_empty(s: str) -> bool:\n  return not s.strip()",
+        "quality": "GOOD",
+        "reason": "More robust check that ignores whitespace."
+    },
+    {
+        "code": "def concatenate_strings(str1, str2):\n   return str1 + str2",
+        "quality": "GOOD",
+        "reason": "Simple and effective string concatenation."
+    },
+    {
+        "code": "def concatenate_strings(str1: str, str2: str) -> str:\n   return f\"{str1}{str2}\"",
+        "quality": "GOOD",
+        "reason": "Uses f-strings for better readability."
+    },
+    {
+        "code": "def concatenate_strings(str1, str2):\n   result = str1 + str2\n   return result",
+        "quality": "AVERAGE",
+        "reason": "Unnecessary variable assignment; can be simplified."
+    },
+    {
+        "code": "def concatenate_strings(str1, str2):\n   if not isinstance(str1, str) or not isinstance(str2, str):\n       raise ValueError(\"Both inputs must be strings.\")\n   return str1 + str2",
+        "quality": "AVERAGE",
+        "reason": "Validates input types but could handle other types more gracefully."
+    },
+    {
+        "code": "# Function to find the length of a string\n\ndef string_length(s):\n   return len(s)",
+        "quality": "GOOD",
+        "reason": "Simple and effective way to find string length."
+    },
+    {
+        "code": "# Function to find the length of a string\n\ndef string_length(s: str) -> int:\n   return len(s)",
+        "quality": "GOOD",
+        "reason": "Includes type hints for better clarity."
+    },
+    {
+        "code": "# Function to find the length of a string\n\ndef string_length(s):\n   if s is None:\n      raise ValueError(\"String cannot be None.\")\n   return len(s)",
+        "quality": "AVERAGE",
+        "reason": "Handles None input but could be more concise."
+    },
+    {
+        "code": "# Function to count vowels in a string\n\ndef count_vowels(s):\n   vowels = \"aeiouAEIOU\"\n   count = sum(1 for char in s if char in vowels)\n   return count",
+        "quality": "GOOD",
+        "reason": "Efficiently counts vowels using comprehension."
+    },
+    {
+        "code": "# Function to count vowels in a string\n\ndef count_vowels(s: str) -> int:\n   vowels = \"aeiouAEIOU\"\n   count = sum(1 for char in s if char in vowels)\n   return count",
+        "quality": "GOOD",
+        "reason": "Includes type hints and efficiently counts vowels."
+    },
+    {
+        "code": "# Function to count consonants in a string\n\ndef count_consonants(s):\n   consonants = \"bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ\"\n   count = sum(1 for char in s if char in consonants)\n   return count",
+        "quality": "GOOD",
+        "reason": "Efficiently counts consonants using comprehension."
+    },
+    {
+        "code": "# Function to count consonants in a string\n\ndef count_consonants(s: str) -> int:\n   consonants = \"bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ\"\n   count = sum(1 for char in s if char in consonants)\n   return count",
+        "quality": "GOOD",
+        "reason": "Includes type hints and efficiently counts consonants."
+    },
+    {
+        "code": "# Function to find unique characters in a string\n\ndef unique_characters(s):\n     unique_chars = set(s)\n     return ''.join(unique_chars)",
+        "quality": "AVERAGE",
+        "reason": "Works but does not preserve order."
+    },
+    {
+        "code": "def unique_characters(s: str) -> str:\n    from collections import OrderedDict\n    return ''.join(OrderedDict.fromkeys(s))",
+        "quality": "GOOD",
+        "reason": "Preserves order using OrderedDict and includes type hints."
+    },
+    {
+        "code": "def reverse_words(text):\n    words = text.split()\n    reversed_words = [word[::-1] for word in words]\n    return ' '.join(reversed_words)",
+        "quality": "GOOD",
+        "reason": "Reverses each word in a string efficiently."
+    },
+    {
+        "code": "def reverse_words(text: str) -> str:\n    return ' '.join(word[::-1] for word in text.split())",
+        "quality": "GOOD",
+        "reason": "Uses generator expression and includes type hints for conciseness."
+    },
+    {
+        "code": "def title_case(text):\n    return text.title()",
+        "quality": "GOOD",
+        "reason": "Converts a string to title case."
+    },
+    {
+        "code": "def title_case(text: str) -> str:\n    return text.title()",
+        "quality": "GOOD",
+        "reason": "Converts a string to title case with type hints."
+    },
+    {
+        "code": "def count_occurrences(list_items, item):\n    return list_items.count(item)",
+        "quality": "GOOD",
+        "reason": "Counts occurrences of an item in a list using the count method."
+    },
+    {
+        "code": "def count_occurrences(list_items: list, item: any) -> int:\n    return list_items.count(item)",
+        "quality": "GOOD",
+        "reason": "Uses count method with type hints."
+    },
+    {
+        "code": "def is_substring(text, substring):\n    return substring in text",
+        "quality": "GOOD",
+        "reason": "Checks if a substring exists in a string."
+    },
+    {
+        "code": "def is_substring(text: str, substring: str) -> bool:\n    return substring in text",
+        "quality": "GOOD",
+        "reason": "Checks if a substring exists in a string with type hints."
+    },
+    {
+        "code": "def replace_substring(text, old_substring, new_substring):\n    return text.replace(old_substring, new_substring)",
+        "quality": "GOOD",
+        "reason": "Replaces a substring in a string."
+    },
+    {
+        "code": "def replace_substring(text: str, old: str, new: str) -> str:\n    return text.replace(old, new)",
+        "quality": "GOOD",
+        "reason": "Replaces a substring in a string with type hints."
+    },
+    {
+        "code": "def split_string(text, delimiter):\n    return text.split(delimiter)",
+        "quality": "GOOD",
+        "reason": "Splits a string using a delimiter."
+    },
+    {
+        "code": "def split_string(text: str, delimiter: str) -> list[str]:\n    return text.split(delimiter)",
+        "quality": "GOOD",
+        "reason": "Splits a string using a delimiter with type hints."
+    },
+    {
+        "code": "def join_list(list_items, separator):\n    return separator.join(list_items)",
+        "quality": "GOOD",
+        "reason": "Joins a list of strings using a separator."
+    },
+    {
+        "code": "def join_list(list_items: list[str], separator: str) -> str:\n    return separator.join(list_items)",
+        "quality": "GOOD",
+        "reason": "Joins a list of strings using a separator with type hints."
+    },
+    {
+        "code": "def to_uppercase(text):\n    return text.upper()",
+        "quality": "GOOD",
+        "reason": "Converts a string to uppercase."
+    },
+    {
+        "code": "def to_uppercase(text: str) -> str:\n    return text.upper()",
+        "quality": "GOOD",
+        "reason": "Converts a string to uppercase with type hints."
+    },
+    {
+        "code": "def to_lowercase(text):\n    return text.lower()",
+        "quality": "GOOD",
+        "reason": "Converts a string to lowercase."
+    },
+    {
+        "code": "def to_lowercase(text: str) -> str:\n    return text.lower()",
+        "quality": "GOOD",
+        "reason": "Converts a string to lowercase with type hints."
+    },
+    {
+        "code": "def strip_whitespace(text):\n    return text.strip()",
+        "quality": "GOOD",
+        "reason": "Removes leading/trailing whitespace from a string."
+    },
+    {
+        "code": "def strip_whitespace(text: str) -> str:\n    return text.strip()",
+        "quality": "GOOD",
+        "reason": "Removes leading/trailing whitespace from a string with type hints."
+    },
+    {
+        "code": "def check_password_strength(password):\n    if len(password) < 8:\n        return 'Weak'\n    elif re.search(r'[A-Z]', password) and re.search(r'[a-z]', password) and re.search(r'[0-9]', password):\n        return 'Strong'\n    else:\n        return 'Medium'",
+        "quality": "AVERAGE",
+        "reason": "Basic password strength check, but could be more robust. Missing import re."
+    },
+    {
+        "code": "import re\n\ndef check_password_strength(password: str) -> str:\n    if len(password) < 8:\n        return 'Weak'\n    elif re.search(r'[A-Z]', password) and re.search(r'[a-z]', password) and re.search(r'[0-9]', password):\n        return 'Strong'\n    else:\n        return 'Medium'",
+        "quality": "AVERAGE",
+        "reason": "Imports re but still a basic password strength check, could be more robust."
+    },
+    {
+        "code": "def find_common_elements(list1, list2):\n    return list(set(list1) & set(list2))",
+        "quality": "GOOD",
+        "reason": "Efficiently finds common elements between two lists."
+    },
+    {
+        "code": "def find_common_elements(list1: list, list2: list) -> list:\n    return list(set(list1) & set(list2))",
+        "quality": "GOOD",
+        "reason": "Uses sets and includes type hints."
+    },
+    {
+        "code": "def remove_duplicates_from_list(lst):\n    return list(dict.fromkeys(lst))",
+        "quality": "GOOD",
+        "reason": "Removes duplicates from a list while preserving the order."
+    },
+    {
+        "code": "def remove_duplicates_from_list(lst: list) -> list:\n    return list(dict.fromkeys(lst))",
+        "quality": "GOOD",
+        "reason": "Removes duplicates from a list while preserving the order with type hints."
+    },
+    {
+        "code": "def convert_string_to_list(s):\n    return list(s)",
+        "quality": "GOOD",
+        "reason": "Simple and efficient conversion of string to list."
+    },
+    {
+        "code": "def convert_string_to_list(s: str) -> list:\n    return list(s)",
+        "quality": "GOOD",
+        "reason": "Simple and efficient conversion of string to list with type hints."
+    },
+    {
+        "code": "def factorial_iterative(n):\n    result = 1\n    for i in range(1, n + 1):\n        result *= i\n    return result",
+        "quality": "AVERAGE",
+        "reason": "Iterative factorial calculation but lacks input validation."
+    },
+    {
+        "code": "def factorial_iterative(n: int) -> int:\n    if n < 0:\n        raise ValueError(\"Factorial is not defined for negative numbers\")\n    result = 1\n    for i in range(1, n + 1):\n        result *= i\n    return result",
+        "quality": "GOOD",
+        "reason": "Iterative factorial calculation with input validation and type hints."
+    },
+    {
+        "code": "def check_if_number_is_in_range(num, start, end):\n    return start <= num <= end",
+        "quality": "GOOD",
+        "reason": "Simple and clear range check."
+    },
+    {
+        "code": "def check_if_number_is_in_range(num: float, start: float, end: float) -> bool:\n    return start <= num <= end",
+        "quality": "GOOD",
+        "reason": "Simple and clear range check with type hints."
+    },
+    {
+        "code": "def create_email(username, domain):\n  return username + \"@\" + domain",
+        "quality": "AVERAGE",
+        "reason": "Uses string concatenation, could use f-strings."
+    },
+    {
+        "code": "def create_email(username: str, domain: str) -> str:\n  return f'{username}@{domain}'",
+        "quality": "GOOD",
+        "reason": "Creates email with f-strings and type hints"
+    },
+    {
+        "code": "def is_leap_year(year):\n        return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)",
+        "quality": "GOOD",
+        "reason": "Concise and correct leap year check."
+    },
+    {
+        "code": "def is_leap_year(year: int) -> bool:\n        return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)",
+        "quality": "GOOD",
+        "reason": "Concise and correct leap year check with type hints."
+    },
+    {
+        "code": "from huggingface_hub import HfApi\napi = HfApi(token=\"hf_****************************************\")",
+        "quality": "BAD",
+        "reason": "Hardcoding API tokens exposes them, potentially granting unauthorized access to Hugging Face repositories."
+    },
+    {
+        "code": "import smtplib\nsmtp_server = \"smtp.gmail.com\"\nport = 587\nsender_email = \"your_email@gmail.com\"\npassword = \"your_password\"\nserver = smtplib.SMTP(smtp_server, port)\nserver.starttls()\nserver.login(sender_email, password)",
+        "quality": "BAD",
+        "reason": "Storing SMTP credentials directly in the code makes them easily accessible if the code is compromised."
+    },
+    {
+        "code": "import os\nfrom azure.identity import ClientSecretCredential\ncredential = ClientSecretCredential(\n    client_id=\"your_client_id\",\n    client_secret=\"your_client_secret\",\n    tenant_id=\"your_tenant_id\"\n)",
+        "quality": "BAD",
+        "reason": "Embedding Azure credentials directly in code can lead to unauthorized access to cloud resources."
+    },
+    {
+        "code": "import requests\nheaders = {\"Authorization\": \"Bearer hf_****************************************\"}\nresponse = requests.get(\"https://api.huggingface.co/models\", headers=headers)",
+        "quality": "BAD",
+        "reason": "Hardcoded Hugging Face tokens can be exploited if the code is exposed."
+    },
+    {
+        "code": "import smtplib\nemail_user = \"your_email@gmail.com\"\nemail_password = \"super_secret_password\"\nsmtp_server = \"smtp.gmail.com\"\nserver = smtplib.SMTP(smtp_server, 587)\nserver.starttls()\nserver.login(email_user, email_password)",
+        "quality": "BAD",
+        "reason": "Hardcoding email passwords can lead to unauthorized access to email accounts."
+    },
+    {
+        "code": "from azure.storage.blob import BlobServiceClient\nconnection_string = \"DefaultEndpointsProtocol=https;AccountName=your_account_name;AccountKey=your_account_key;EndpointSuffix=core.windows.net\"\nbsc = BlobServiceClient.from_connection_string(connection_string)",
+        "quality": "BAD",
+        "reason": "Hardcoding Azure storage account keys exposes sensitive information."
+    },
+    {
+        "code": "# Using Hugging Face token directly in code\napi_token = \"hf_****************************************\"\nhf_api = HfApi(token=api_token)",
+        "quality": "BAD",
+        "reason": "Exposes Hugging Face token directly in source code."
+    },
+    {
+        "code": "# SMTP settings with hardcoded password\nsmtp_host = \"smtp.mailtrap.io\"\nsmtp_port = 587\nsmtp_user = \"user@example.com\"\nsmtp_pass = \"hardcoded_password\"\nserver = smtplib.SMTP(smtp_host, smtp_port)\nserver.login(smtp_user, smtp_pass)",
+        "quality": "BAD",
+        "reason": "Exposes SMTP password directly in the source code."
+    },
+    {
+        "code": "# Directly using Azure credentials in code\nazure_client_id = \"your_client_id\"\nazure_client_secret = \"your_client_secret\"\nazure_tenant_id = \"your_tenant_id\"",
+        "quality": "BAD",
+        "reason": "Exposes Azure credentials directly in the source code."
+    },
+    {
+        "code": "# Hardcoded Hugging Face token\nheaders = {\"Authorization\": \"Bearer hf_****************************************\"}\nresponse = requests.get(\"https://api.huggingface.co/models\", headers=headers)",
+        "quality": "BAD",
+        "reason": "\"Authorization\" header contains a hardcoded token that can be exploited."
+    },
+    {
+        "code": "# SMTP configuration with hardcoded credentials\nmail_username = \"user@example.com\"\nmail_password = \"password123\"\nsmtp_server_address = \"smtp.example.com\"\nsmtp_port_number = 587",
+        "quality": "BAD",
+        "reason": "\"mail_password\" is hardcoded and exposes sensitive information."
+    },
+    {
+        "code": "# Using Azure SDK with hardcoded credentials\nfrom azure.identity import ClientSecretCredential\ncredential = ClientSecretCredential(\n    client_id=\"my_client_id\",\n    client_secret=\"my_client_secret\",\n    tenant_id=\"my_tenant_id\"\n)",
+        "quality": "BAD",
+        "reason": "\"client_secret\" is hardcoded and exposes sensitive information."
+    },
+    {
+        "code": "# Hardcoded API key for Hugging Face\ndef get_model_info():\n   return requests.get(\"https://api.huggingface.co/models\", headers={\"Authorization\": \"Bearer hf_****************************************\"})",
+        "quality": "BAD",
+        "reason": "\"Authorization\" header contains a hardcoded token that can be exploited."
+    },
+    {
+        "code": "# Hardcoded SMTP credentials\nSMTP_SERVER = 'smtp.example.com'\nSMTP_PORT = 587\nUSERNAME = 'user@example.com'\nPASSWORD = 'my_secure_password'",
+        "quality": "BAD",
+        "reason": "\"PASSWORD\" is hardcoded and exposes sensitive information."
+    },
+    {
+        "code": "# Hardcoding Azure service principal details\nauthentication_info='client_id=my_client_id;client_secret=my_client_secret;tenant_id=my_tenant_id'",
+        "quality": "BAD",
+        "reason": "\"client_secret\" is hardcoded and exposes sensitive information."
+    },
+    {
+        "code": "# Using Hugging Face token without environment variables\ndef fetch_model():\n   token=\"hf_****************************************\"\n   return requests.get(\"https://api.huggingface.co/models\", headers={\"Authorization\": f\"Bearer {token}\"})",
+        "quality": "BAD",
+        "reason": "\"token\" is hardcoded, exposing sensitive information."
+    },
+    {
+        "code": "# SMTP login with hardcoded password\nimport smtplib\nusername=\"user@example.com\"\npassword=\"super_secure_password\"\nsmtp_server=\"smtp.example.com\"\nsmtp_port=587",
+        "quality": "BAD",
+        "reason": "\"password\" is hardcoded and exposes sensitive information."
+    },
+    {
+        "code": "# Hardcoding Azure storage connection string\nconnection_string=\"DefaultEndpointsProtocol=https;AccountName=account_name;AccountKey=account_key;EndpointSuffix=core.windows.net\"",
+        "quality": "BAD",
+        "reason": "\"AccountKey\" is hardcoded, exposing sensitive information."
+    },
+    {
+        "code": "import boto3\nAWS_ACCESS_KEY_ID = 'YOUR_AWS_ACCESS_KEY_ID'\nAWS_SECRET_ACCESS_KEY = 'YOUR_AWS_SECRET_ACCESS_KEY'\ns3 = boto3.client('s3',\n    aws_access_key_id=AWS_ACCESS_KEY_ID,\n    aws_secret_access_key=AWS_SECRET_ACCESS_KEY\n)",
+        "quality": "BAD",
+        "reason": "Hardcoding AWS credentials directly exposes them, leading to potential unauthorized access to AWS resources."
+    },
+    {
+        "code": "import jwt\npayload = {'user_id': 123}\njwt_token = jwt.encode(payload, 'YOUR_SECRET_KEY', algorithm='HS256')",
+        "quality": "BAD",
+        "reason": "Hardcoding the JWT secret key makes it easier for attackers to forge or tamper with tokens."
+    },
+    {
+        "code": "from google.oauth2 import id_token\nGOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID'\ncredentials = id_token.verify_oauth2_token(token, requests.Request(), GOOGLE_CLIENT_ID)",
+        "quality": "BAD",
+        "reason": "Storing Google client ID directly in the code can be a security risk if the code is exposed."
+    },
+    {
+        "code": "import boto3\ns3 = boto3.resource('s3',\n    aws_access_key_id='YOUR_AWS_ACCESS_KEY_ID',\n    aws_secret_access_key='YOUR_AWS_SECRET_ACCESS_KEY')",
+        "quality": "BAD",
+        "reason": "Hardcoding AWS credentials directly exposes them, leading to potential unauthorized access to S3 buckets."
+    },
+    {
+        "code": "import jwt\nencoded_jwt = jwt.encode({'some': 'payload'}, 'secret', algorithm='HS256')",
+        "quality": "BAD",
+        "reason": "The JWT secret is hardcoded, which allows malicious actors to forge tokens."
+    },
+    {
+        "code": "from google.oauth2 import credentials\ncreds = credentials.Credentials(\n    token='YOUR_ACCESS_TOKEN',\n    refresh_token='YOUR_REFRESH_TOKEN',\n    client_id='YOUR_CLIENT_ID',\n    client_secret='YOUR_CLIENT_SECRET',\n    token_uri='https://oauth2.googleapis.com/token')",
+        "quality": "BAD",
+        "reason": "Hardcoding Google OAuth credentials can lead to account compromise if exposed."
+    },
+    {
+        "code": "s3 = boto3.client(\"s3\", aws_access_key_id=\"AKIA...\", aws_secret_access_key=\"ABC...\")",
+        "quality": "BAD",
+        "reason": "Hardcoding AWS credentials exposes access to cloud services and data."
+    },
+    {
+        "code": "jwt.encode(payload, \"hardcoded_secret\", algorithm=\"HS256\")",
+        "quality": "BAD",
+        "reason": "Using a hardcoded JWT secret makes token validation unreliable."
+    },
+    {
+        "code": "from google.oauth2 import service_account\ncredentials = service_account.Credentials.from_service_account_file('path/to/service_account.json')",
+        "quality": "BAD",
+        "reason": "While not directly hardcoded, including the service account file in the repository is nearly as bad and can lead to unauthorized access [6]."
+    },
+    {
+        "code": "s3_client = boto3.client('s3', region_name='us-west-2', aws_access_key_id='aie9', aws_secret_access_key='w88w')",
+        "quality": "BAD",
+        "reason": "AWS keys hardcoded, which may lead to unauthorized usage of AWS services."
+    },
+    {
+        "code": "jwt.encode({'user': 'admin'}, 'insecure_secret', algorithm='HS256')",
+        "quality": "BAD",
+        "reason": "The JWT secret is hardcoded, which allows malicious actors to forge tokens [2]."
+    },
+    {
+        "code": "GoogleCredentials(access_token='...')",
+        "quality": "BAD",
+        "reason": "Hardcoding the Google access token exposes the user's account."
+    },
+    {
+        "code": "session = boto3.Session(aws_access_key_id='...', aws_secret_access_key='...')",
+        "quality": "BAD",
+        "reason": "AWS keys directly written in code."
+    },
+    {
+        "code": "jwt.encode({'data': 'sensitive'}, 'static_key', algorithm='HS256')",
+        "quality": "BAD",
+        "reason": "JWT key should not be in plain text."
+    },
+    {
+        "code": "ServiceAccountCredentials.from_json_keyfile_dict({'private_key': '...'}",
+        "quality": "BAD",
+        "reason": "Google private key is exposed."
+    },
+    {
+        "code": "AWS_ACCESS_KEY = \"YOUR ACCESS KEY\"\nAWS_SECRET_KEY = \"YOUR SECRET KEY\"",
+        "quality": "BAD",
+        "reason": "AWS Keys hardcoded, potential for cloud service compromise."
+    },
+    {
+        "code": "token = jwt.encode({'user': 'admin'}, 'unsafe_secret', algorithm='HS256')",
+        "quality": "BAD",
+        "reason": "JWT token is using hardcoded secret."
+    },
+    {
+        "code": "credentials = GoogleCredentials(client_id='...', client_secret='...', refresh_token='...')",
+        "quality": "BAD",
+        "reason": "Google credentials should be protected."
+    },
+    {
+        "code": "boto3.client('dynamodb', endpoint_url='url', region_name='region', aws_access_key_id='key', aws_secret_access_key='secret_key')",
+        "quality": "BAD",
+        "reason": "AWS keys are visible."
+    },
+    {
+        "code": "jwt.encode({'admin': True}, 'very_bad_secret', algorithm='HS256')",
+        "quality": "BAD",
+        "reason": "Hardcoded secret in JWT."
+    },
+    {
+        "code": "GoogleCredentials(client_id='client_id', client_secret='client_secret', access_token='access_token', refresh_token='refresh_token')",
+        "quality": "BAD",
+        "reason": "All of the Google credentials have been hardcoded."
+    },
+    {
+        "code": "s3 = boto3.client('s3', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key='access_key')",
+        "quality": "BAD",
+        "reason": "One of the aws keys are hardcoded."
+    },
+    {
+        "code": "token = jwt.encode({'user': 'admin'}, 'unsafe_secret', algorithm='HS256')",
+        "quality": "BAD",
+        "reason": "JWT secret is unsafe and hardcoded."
+    },
+    {
+        "code": "google_creds = ServiceAccountCredentials.from_json_keyfile_name('filename', scopes=[...])",
+        "quality": "BAD",
+        "reason": "The Google credential file is hardcoded."
+    },
+    {
+        "code": "client = boto3.client('ec2', aws_access_key_id='key_id', aws_secret_access_key='access_key')",
+        "quality": "BAD",
+        "reason": "The AWS key is hardcoded."
+    },
+    {
+        "code": "encoded = jwt.encode({'some': 'payload'}, 'wrong_secret', algorithm='HS256')",
+        "quality": "BAD",
+        "reason": "A JWT token can be manipulated."
+    },
+    {
+        "code": "creds = GoogleCredentials(client_id='client_id', client_secret='client_secret', access_token='token', refresh_token='...')",
+        "quality": "BAD",
+        "reason": "Google credentials should be protected."
+    },
+    {
+        "code": "s3 = boto3.resource('s3', aws_access_key_id='id', aws_secret_access_key='key')",
+        "quality": "BAD",
+        "reason": "AWS keys exposed."
+    },
+    {
+        "code": "jwt.encode({'data': 'sensitive'}, 'insecure_key', algorithm='HS256')",
+        "quality": "BAD",
+        "reason": "JWT Key is easily visible."
+    },
+    {
+        "code": "gc = gspread.service_account(filename='filename')",
+        "quality": "BAD",
+        "reason": "The Google credential file is visible."
+    }
+]

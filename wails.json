@@ -1,0 +1,11 @@
+{
+    "$schema": "https://wails.io/schemas/config.v2.json",
+    "name": "dide",
+    "outputfilename": "dide",
+    "frontend:install": "npm install --force",
+    "frontend:build": "npm run build",
+    "author": {
+        "name": "Keerthana R",
+        "email": "grittypuffy@riseup.net"
+    }
+}
