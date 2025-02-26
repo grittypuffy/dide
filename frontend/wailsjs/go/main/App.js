@@ -9,7 +9,3 @@ export function GetFolderTree(arg1) {
 export function GetWorkingPath() {
   return window['go']['main']['App']['GetWorkingPath']();
 }
-
-export function Greet(arg1) {
-  return window['go']['main']['App']['Greet'](arg1);
-}

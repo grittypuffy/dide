@@ -4,5 +4,3 @@
 export function GetFolderTree(arg1:string):Promise<string>;
 
 export function GetWorkingPath():Promise<string>;
-
-export function Greet(arg1:string):Promise<string>;

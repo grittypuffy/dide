@@ -5,11 +5,13 @@ import (
 	"fmt"
 	"dide/dide"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
+	"github.com/rifaideen/talkative"
 )
 
 // App struct
 type App struct {
 	ctx context.Context
+	ollama *talkative.Client
 }
 
 // NewApp creates a new App application struct
@@ -21,6 +23,12 @@ func NewApp() *App {
 func (a *App) startup(ctx context.Context) {
 	// Perform your setup here
 	a.ctx = ctx
+	client, err := talkative.New("http://localhost:11434")
+
+	if err != nil {
+  		panic("Failed to create talkative client")
+	}
+	a.ollama = client
 }
 
 // domReady is called after front-end resources have been loaded
@@ -38,11 +46,6 @@ func (a *App) beforeClose(ctx context.Context) (prevent bool) {
 // shutdown is called at application termination
 func (a *App) shutdown(ctx context.Context) {
 	// Perform your teardown here
-}
-
-// Greet returns a greeting for the given name
-func (a *App) Greet(name string) string {
-	return fmt.Sprintf("Hello %s, It's show time!", name)
 }
 
 func (a *App) GetFolderTree(path string) string {
