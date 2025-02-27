@@ -4,11 +4,14 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"log"
 )
 
 type Node struct {
 	Name     string  `json:"name"`
+	Folder   bool  `json:"folder"`
 	Children []Node `json:"children,omitempty"`
+	FilePath string `json:"path"`
 }
 
 func traverseDir(path string) ([]Node, error) {
@@ -28,10 +31,13 @@ func traverseDir(path string) ([]Node, error) {
 			}
 			nodes = append(nodes, Node{
 				Name:     file.Name(),
+				Folder:   true,
 				Children: childNodes,
+				FilePath: childPath,
 			})
 		} else {
-			nodes = append(nodes, Node{Name: file.Name()})
+			filePath := filepath.Join(path, file.Name())
+			nodes = append(nodes, Node{Name: file.Name(), Folder: false, FilePath: filePath})
 		}
 	}
 
@@ -46,6 +52,7 @@ func FolderTree(directoryName string) (string, error) {
 
 	rootNode := Node{
 		Name:     filepath.Base(directoryName),
+		Folder: true,
 		Children: nodes,
 	}
 
@@ -55,4 +62,12 @@ func FolderTree(directoryName string) (string, error) {
 	}
 
 	return string(jsonData), nil
+}
+
+func ReadFile(filePath string) (string, error) {
+	content, err := os.ReadFile(filePath)
+    if err != nil {
+        log.Fatal(err)
+    }
+	return string(content), nil
 }
